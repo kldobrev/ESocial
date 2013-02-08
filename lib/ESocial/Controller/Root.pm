@@ -26,11 +26,11 @@ The root page (/)
 
 =cut
 
-sub index :Path :Args(0) {
+sub index :Path('/') :Args(0) {
     my ( $self, $c ) = @_;
 
     # Hello World
-    $c->response->body( $c->welcome_message );
+    $c->stash(template => 'index.tt2');
 }
 
 =head2 default
@@ -63,6 +63,44 @@ This library is free software. You can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
+
+=head2 about
+
+Render 'about' page
+
+=cut
+
+sub about :Path('/about') {
+	my ($self, $c) = @_;
+	$c->stash(template => 'about.tt2');
+}
+
+=head2 help
+
+Render 'help' page
+
+=cut
+
+sub help :Path('/help') {
+	my ($self, $c) = @_;
+	$c->stash(template => 'help.tt2');
+}
+
+=head2 auto
+
+Default action redirects guests or non logged useres to index page
+
+=cut
+
+sub auto :Private {
+	my ($self, $c) = @_;
+#	return 1 if($c->controller eq $c->controller('Users'));
+#	if(!$c->user_exists) {
+#		$c->response->redirect('index');
+#		return 0;
+#	}
+	return 1;
+}
 
 __PACKAGE__->meta->make_immutable;
 

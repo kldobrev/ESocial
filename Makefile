@@ -20,13 +20,13 @@
 #     LICENSE => q[perl]
 #     NAME => q[ESocial]
 #     NO_META => q[1]
-#     PREREQ_PM => { namespace::autoclean=>q[0], Catalyst::Plugin::Static::Simple=>q[0], ExtUtils::MakeMaker=>q[6.36], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Action::RenderView=>q[0], Test::More=>q[0.88], Config::General=>q[0], Catalyst::Runtime=>q[5.90019], Moose=>q[0] }
+#     PREREQ_PM => { namespace::autoclean=>q[0], Catalyst::Plugin::Static::Simple=>q[0], ExtUtils::MakeMaker=>q[6.36], Catalyst::Plugin::ConfigLoader=>q[0], Catalyst::Plugin::Session::Store::File=>q[0], Catalyst::Action::RenderView=>q[0], Catalyst::Plugin::Session=>q[0], Test::More=>q[0.88], Catalyst::Plugin::Session::State::Cookie=>q[0], Catalyst::Plugin::Authentication=>q[0], Config::General=>q[0], Catalyst::Runtime=>q[5.90019], Moose=>q[0] }
 #     TEST_REQUIRES => {  }
 #     VERSION => q[0.01]
 #     VERSION_FROM => q[lib/ESocial.pm]
 #     dist => { PREOP=>q[$(PERL) -I. "-MModule::Install::Admin" -e "dist_preop(q($(DISTVNAME)))"] }
 #     realclean => { FILES=>q[MYMETA.yml] }
-#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t] }
+#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Users.t t/view_HTML.t] }
 
 # --- MakeMaker post_initialize section:
 
@@ -172,7 +172,9 @@ MAN1PODS = script/esocial_cgi.pl \
 	script/esocial_server.pl \
 	script/esocial_test.pl
 MAN3PODS = lib/ESocial.pm \
-	lib/ESocial/Controller/Root.pm
+	lib/ESocial/Controller/Root.pm \
+	lib/ESocial/Controller/Users.pm \
+	lib/ESocial/View/HTML.pm
 
 # Where is the Config information that we are using/depend on
 CONFIGDEP = $(PERL_ARCHLIB)$(DFSEP)Config.pm $(PERL_INC)$(DFSEP)config.h
@@ -195,10 +197,16 @@ PERL_ARCHIVE_AFTER =
 
 
 TO_INST_PM = lib/ESocial.pm \
-	lib/ESocial/Controller/Root.pm
+	lib/ESocial/Controller/Root.pm \
+	lib/ESocial/Controller/Users.pm \
+	lib/ESocial/View/HTML.pm
 
-PM_TO_BLIB = lib/ESocial.pm \
+PM_TO_BLIB = lib/ESocial/Controller/Users.pm \
+	blib/lib/ESocial/Controller/Users.pm \
+	lib/ESocial.pm \
 	blib/lib/ESocial.pm \
+	lib/ESocial/View/HTML.pm \
+	blib/lib/ESocial/View/HTML.pm \
 	lib/ESocial/Controller/Root.pm \
 	blib/lib/ESocial/Controller/Root.pm
 
@@ -428,7 +436,9 @@ manifypods : pure_all  \
 	script/esocial_server.pl \
 	script/esocial_create.pl \
 	script/esocial_cgi.pl \
+	lib/ESocial/Controller/Users.pm \
 	lib/ESocial.pm \
+	lib/ESocial/View/HTML.pm \
 	lib/ESocial/Controller/Root.pm
 	$(NOECHO) $(POD2MAN) --section=1 --perm_rw=$(PERM_RW) \
 	  script/esocial_test.pl $(INST_MAN1DIR)/esocial_test.pl.$(MAN1EXT) \
@@ -437,7 +447,9 @@ manifypods : pure_all  \
 	  script/esocial_create.pl $(INST_MAN1DIR)/esocial_create.pl.$(MAN1EXT) \
 	  script/esocial_cgi.pl $(INST_MAN1DIR)/esocial_cgi.pl.$(MAN1EXT) 
 	$(NOECHO) $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) \
+	  lib/ESocial/Controller/Users.pm $(INST_MAN3DIR)/ESocial::Controller::Users.$(MAN3EXT) \
 	  lib/ESocial.pm $(INST_MAN3DIR)/ESocial.$(MAN3EXT) \
+	  lib/ESocial/View/HTML.pm $(INST_MAN3DIR)/ESocial::View::HTML.$(MAN3EXT) \
 	  lib/ESocial/Controller/Root.pm $(INST_MAN3DIR)/ESocial::Controller::Root.$(MAN3EXT) 
 
 
@@ -812,7 +824,7 @@ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 TEST_VERBOSE=0
 TEST_TYPE=test_$(LINKTYPE)
 TEST_FILE = test.pl
-TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t
+TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Users.t t/view_HTML.t
 TESTDB_SW = -d
 
 testdb :: testdb_$(LINKTYPE)
@@ -843,7 +855,11 @@ ppd :
 	$(NOECHO) $(ECHO) '    <AUTHOR>Konstantin,,,</AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Action::RenderView" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Authentication" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::ConfigLoader" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Session" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Session::State::Cookie" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Session::Store::File" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Plugin::Static::Simple" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Catalyst::Runtime" VERSION="5.90019" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="Config::General" />' >> $(DISTNAME).ppd
@@ -859,7 +875,9 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
+	  lib/ESocial/Controller/Users.pm blib/lib/ESocial/Controller/Users.pm \
 	  lib/ESocial.pm blib/lib/ESocial.pm \
+	  lib/ESocial/View/HTML.pm blib/lib/ESocial/View/HTML.pm \
 	  lib/ESocial/Controller/Root.pm blib/lib/ESocial/Controller/Root.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
@@ -908,14 +926,14 @@ installdeps_notest ::
 	$(NOECHO) $(NOOP)
 
 upgradedeps ::
-	$(PERL) Makefile.PL --config= --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90019,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config= --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90019,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,namespace::autoclean,0,Catalyst::Plugin::Authentication,0,Catalyst::Plugin::Session,0,Catalyst::Plugin::Session::Store::File,0,Catalyst::Plugin::Session::State::Cookie,0,Config::General,0
 
 upgradedeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90019,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,namespace::autoclean,0,Config::General,0
+	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::More,0.88,Catalyst::Runtime,5.90019,Catalyst::Plugin::ConfigLoader,0,Catalyst::Plugin::Static::Simple,0,Catalyst::Action::RenderView,0,Moose,0,namespace::autoclean,0,Catalyst::Plugin::Authentication,0,Catalyst::Plugin::Session,0,Catalyst::Plugin::Session::Store::File,0,Catalyst::Plugin::Session::State::Cookie,0,Config::General,0
 
 listdeps ::
 	@$(PERL) -le "print for @ARGV" 
 
 listalldeps ::
-	@$(PERL) -le "print for @ARGV" Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Action::RenderView Moose namespace::autoclean Config::General
+	@$(PERL) -le "print for @ARGV" Test::More Catalyst::Runtime Catalyst::Plugin::ConfigLoader Catalyst::Plugin::Static::Simple Catalyst::Action::RenderView Moose namespace::autoclean Catalyst::Plugin::Authentication Catalyst::Plugin::Session Catalyst::Plugin::Session::Store::File Catalyst::Plugin::Session::State::Cookie Config::General
 

@@ -22,6 +22,12 @@ use Catalyst qw/
     Static::Simple
 /;
 
+#include above:
+	#Authentication
+	#Session::Store::File
+	#Session::State::Cookie
+	#StatusMessage
+
 extends 'Catalyst';
 
 our $VERSION = '0.01';
@@ -40,6 +46,12 @@ __PACKAGE__->config(
     # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
     enable_catalyst_header => 1, # Send X-Catalyst header
+);
+
+__PACKAGE__->config(
+	'View::HTML' => {
+		INCLUDE_PATH => [ __PACKAGE__->path_to('root', 'src'), ],
+	},
 );
 
 # Start the application

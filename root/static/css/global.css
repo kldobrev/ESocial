@@ -1,0 +1,78 @@
+body {
+	background-color: #F5FFC5;
+	margin: 0;
+}
+
+#wrapper {
+	background-image: url('../images/index_background.jpg');
+	width: 950px;
+	margin: auto;
+	border: 1px solid #888888;
+	border-radius: 4px;
+	font-family: Arial;
+	font-size: 14px;
+}
+
+#header {
+	background-image: url('../images/header_back.jpg');
+	height: 80px;
+}
+
+#header h1 {
+	margin-left: 36px;	
+	float: left;
+}
+
+#header h1 a {
+	text-decoration: none;
+	font-family: "Comic Sans MS";
+	font-style: italic;
+	font-size: 36px;
+	color: black;
+}
+
+#header ul {
+	margin-top: 36px;
+	list-style-type: none;
+	float: right;
+}
+
+#header ul li {
+	margin-right: 24px;
+	display: inline;
+}
+
+#header ul a {
+	font-size: 16px;
+}
+
+#body_contents {
+	clear: both;
+	padding: 16px;
+}
+
+#footer {
+	padding: 0px;
+	clear: both;
+	margin-bottom: -14px;
+	text-align: center;
+	background-color: #FFFFA2;
+}
+
+#login_form, #register_form {
+	margin-bottom: 90px;
+	padding: 16px;
+	border: 1px solid #E6ED00;
+	border-radius: 6px;
+	background-color: #FDFFCE;
+	width: 400px;
+	height: 300px;
+}
+
+#login_form {
+	float: left;
+}
+
+#register_form {
+	float: right;
+}

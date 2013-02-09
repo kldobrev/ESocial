@@ -20,13 +20,12 @@ use Catalyst qw/
     -Debug
     ConfigLoader
     Static::Simple
+	Authentication
+	Session::Store::File
+	Session::State::Cookie
+	StatusMessage
 /;
 
-#include above:
-	#Authentication
-	#Session::Store::File
-	#Session::State::Cookie
-	#StatusMessage
 
 extends 'Catalyst';
 
@@ -54,6 +53,15 @@ __PACKAGE__->config(
 	},
 );
 
+__PACKAGE__->config(
+	'Plugin::Authentication' => {
+		default => {
+			class => 'SimpleDB',
+			user_model => 'ESocial::User',
+			password_type => 'self_check',
+		},
+	},
+);
 # Start the application
 __PACKAGE__->setup();
 

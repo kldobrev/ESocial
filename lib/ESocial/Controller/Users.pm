@@ -45,6 +45,18 @@ Create a new user and profile record in the database
 
 =cut
 
+sub register :Path('/register') {
+	my ($self, $c) = @_;
+	my $email = $c->request->params->{reg_email};
+	my $password = $c->request->params->{reg_pass};
+	my $rep_password = $c->request->params->{reg_rep_pass};
+	my $user = $c->model('ESocial::User')->create({
+		email => $email,
+		password => $password,
+	});
+	$c->stash(template => 'index.tt2');
+}
+
 
 __PACKAGE__->meta->make_immutable;
 

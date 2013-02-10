@@ -37,7 +37,28 @@ Konstantin,,,
 This library is free software. You can redistribute it and/or modify
 it under the same terms as Perl itself.
 
+=head2
+
+Validate user input
+
 =cut
+
+sub valid_message {
+	my $params = shift;
+	if(length($params->{reg_name}) < 3) {
+		return "Name must be at least 3 characters long.";
+	}
+	if(length($params->{reg_pass}) < 8) {
+		return "Password must be at least 8 characters long."
+	}
+	if($params->{reg_pass} ne $params->{reg_rep_pass}) {
+		return "The repeated password does not match the password you entered before that.";
+	}
+	if(!($params->{reg_email} =~ /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/)) {
+		return "The email address you have entered is not valid";
+	}
+	return "";
+}
 
 =head2 register
 
@@ -47,6 +68,13 @@ Create a new user and profile record in the database
 
 sub register :Path('/register') {
 	my ($self, $c) = @_;
+	my $validation_error = valid_message($c->request->params);
+	if($validation_error ne "") {
+		$c->stash(error_register_msg => $validation_error);
+		$c->stash(template => 'index.tt2');
+		return;
+	}
+	my $name = $c->request->params->{reg_name};
 	my $email = $c->request->params->{reg_email};
 	my $password = $c->request->params->{reg_pass};
 	my $rep_password = $c->request->params->{reg_rep_pass};
@@ -54,6 +82,8 @@ sub register :Path('/register') {
 		email => $email,
 		password => $password,
 	});
+	$user->create_related('user_profile', {name => $name});
+	$c->stash(reg_success_msg => "You have successfuly registered. Now you can login to view your profile:");
 	$c->stash(template => 'index.tt2');
 }
 

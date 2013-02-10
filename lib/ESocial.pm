@@ -21,6 +21,7 @@ use Catalyst qw/
     ConfigLoader
     Static::Simple
 	Authentication
+	Session
 	Session::Store::File
 	Session::State::Cookie
 	StatusMessage

@@ -26,7 +26,7 @@
 #     VERSION_FROM => q[lib/ESocial.pm]
 #     dist => { PREOP=>q[$(PERL) -I. "-MModule::Install::Admin" -e "dist_preop(q($(DISTVNAME)))"] }
 #     realclean => { FILES=>q[MYMETA.yml] }
-#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Users.t t/view_HTML.t] }
+#     test => { TESTS=>q[t/01app.t t/02pod.t t/03podcoverage.t t/controller_Users.t t/model_ESocial.t t/view_HTML.t] }
 
 # --- MakeMaker post_initialize section:
 
@@ -174,6 +174,9 @@ MAN1PODS = script/esocial_cgi.pl \
 MAN3PODS = lib/ESocial.pm \
 	lib/ESocial/Controller/Root.pm \
 	lib/ESocial/Controller/Users.pm \
+	lib/ESocial/Model/ESocial.pm \
+	lib/ESocial/Schema/Result/User.pm \
+	lib/ESocial/Schema/Result/UserProfile.pm \
 	lib/ESocial/View/HTML.pm
 
 # Where is the Config information that we are using/depend on
@@ -199,16 +202,28 @@ PERL_ARCHIVE_AFTER =
 TO_INST_PM = lib/ESocial.pm \
 	lib/ESocial/Controller/Root.pm \
 	lib/ESocial/Controller/Users.pm \
+	lib/ESocial/Model/ESocial.pm \
+	lib/ESocial/Schema.pm \
+	lib/ESocial/Schema/Result/User.pm \
+	lib/ESocial/Schema/Result/UserProfile.pm \
 	lib/ESocial/View/HTML.pm
 
-PM_TO_BLIB = lib/ESocial/Controller/Users.pm \
-	blib/lib/ESocial/Controller/Users.pm \
+PM_TO_BLIB = lib/ESocial/Model/ESocial.pm \
+	blib/lib/ESocial/Model/ESocial.pm \
+	lib/ESocial/Schema.pm \
+	blib/lib/ESocial/Schema.pm \
 	lib/ESocial.pm \
 	blib/lib/ESocial.pm \
+	lib/ESocial/Controller/Users.pm \
+	blib/lib/ESocial/Controller/Users.pm \
+	lib/ESocial/Schema/Result/User.pm \
+	blib/lib/ESocial/Schema/Result/User.pm \
 	lib/ESocial/View/HTML.pm \
 	blib/lib/ESocial/View/HTML.pm \
 	lib/ESocial/Controller/Root.pm \
-	blib/lib/ESocial/Controller/Root.pm
+	blib/lib/ESocial/Controller/Root.pm \
+	lib/ESocial/Schema/Result/UserProfile.pm \
+	blib/lib/ESocial/Schema/Result/UserProfile.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -436,10 +451,13 @@ manifypods : pure_all  \
 	script/esocial_server.pl \
 	script/esocial_create.pl \
 	script/esocial_cgi.pl \
-	lib/ESocial/Controller/Users.pm \
 	lib/ESocial.pm \
+	lib/ESocial/Controller/Users.pm \
+	lib/ESocial/Model/ESocial.pm \
+	lib/ESocial/Schema/Result/User.pm \
 	lib/ESocial/View/HTML.pm \
-	lib/ESocial/Controller/Root.pm
+	lib/ESocial/Controller/Root.pm \
+	lib/ESocial/Schema/Result/UserProfile.pm
 	$(NOECHO) $(POD2MAN) --section=1 --perm_rw=$(PERM_RW) \
 	  script/esocial_test.pl $(INST_MAN1DIR)/esocial_test.pl.$(MAN1EXT) \
 	  script/esocial_fastcgi.pl $(INST_MAN1DIR)/esocial_fastcgi.pl.$(MAN1EXT) \
@@ -447,10 +465,13 @@ manifypods : pure_all  \
 	  script/esocial_create.pl $(INST_MAN1DIR)/esocial_create.pl.$(MAN1EXT) \
 	  script/esocial_cgi.pl $(INST_MAN1DIR)/esocial_cgi.pl.$(MAN1EXT) 
 	$(NOECHO) $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) \
-	  lib/ESocial/Controller/Users.pm $(INST_MAN3DIR)/ESocial::Controller::Users.$(MAN3EXT) \
 	  lib/ESocial.pm $(INST_MAN3DIR)/ESocial.$(MAN3EXT) \
+	  lib/ESocial/Controller/Users.pm $(INST_MAN3DIR)/ESocial::Controller::Users.$(MAN3EXT) \
+	  lib/ESocial/Model/ESocial.pm $(INST_MAN3DIR)/ESocial::Model::ESocial.$(MAN3EXT) \
+	  lib/ESocial/Schema/Result/User.pm $(INST_MAN3DIR)/ESocial::Schema::Result::User.$(MAN3EXT) \
 	  lib/ESocial/View/HTML.pm $(INST_MAN3DIR)/ESocial::View::HTML.$(MAN3EXT) \
-	  lib/ESocial/Controller/Root.pm $(INST_MAN3DIR)/ESocial::Controller::Root.$(MAN3EXT) 
+	  lib/ESocial/Controller/Root.pm $(INST_MAN3DIR)/ESocial::Controller::Root.$(MAN3EXT) \
+	  lib/ESocial/Schema/Result/UserProfile.pm $(INST_MAN3DIR)/ESocial::Schema::Result::UserProfile.$(MAN3EXT) 
 
 
 
@@ -824,7 +845,7 @@ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 TEST_VERBOSE=0
 TEST_TYPE=test_$(LINKTYPE)
 TEST_FILE = test.pl
-TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Users.t t/view_HTML.t
+TEST_FILES = t/01app.t t/02pod.t t/03podcoverage.t t/controller_Users.t t/model_ESocial.t t/view_HTML.t
 TESTDB_SW = -d
 
 testdb :: testdb_$(LINKTYPE)
@@ -875,10 +896,14 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/ESocial/Controller/Users.pm blib/lib/ESocial/Controller/Users.pm \
+	  lib/ESocial/Model/ESocial.pm blib/lib/ESocial/Model/ESocial.pm \
+	  lib/ESocial/Schema.pm blib/lib/ESocial/Schema.pm \
 	  lib/ESocial.pm blib/lib/ESocial.pm \
+	  lib/ESocial/Controller/Users.pm blib/lib/ESocial/Controller/Users.pm \
+	  lib/ESocial/Schema/Result/User.pm blib/lib/ESocial/Schema/Result/User.pm \
 	  lib/ESocial/View/HTML.pm blib/lib/ESocial/View/HTML.pm \
-	  lib/ESocial/Controller/Root.pm blib/lib/ESocial/Controller/Root.pm 
+	  lib/ESocial/Controller/Root.pm blib/lib/ESocial/Controller/Root.pm \
+	  lib/ESocial/Schema/Result/UserProfile.pm blib/lib/ESocial/Schema/Result/UserProfile.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

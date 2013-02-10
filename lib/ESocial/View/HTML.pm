@@ -8,7 +8,7 @@ __PACKAGE__->config(
     TEMPLATE_EXTENSION => '.tt2',
 	render_die => 1,
 	TIMER => 0,
-	WRAPPER => 'wrappers/global_wrapper.tt2'
+	WRAPPER => 'wrappers/wrapper.tt2',
 );
 
 =head1 NAME

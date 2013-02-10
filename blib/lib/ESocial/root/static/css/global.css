@@ -31,12 +31,19 @@ body {
 	color: black;
 }
 
-#about_link {
+#header ul {
 	margin-top: 36px;
-	margin-right: 48px;
+	list-style-type: none;
 	float: right;
-	font-size: 20px;
-	text-decoration: none;
+}
+
+#header ul li {
+	margin-right: 24px;
+	display: inline;
+}
+
+#header ul a {
+	font-size: 16px;
 }
 
 #body_contents {
@@ -56,27 +63,16 @@ body {
 	margin-bottom: 90px;
 	padding: 16px;
 	border: 1px solid #E6ED00;
-	border-radius: 9px;
+	border-radius: 6px;
 	background-color: #FDFFCE;
 	width: 400px;
+	height: 300px;
 }
 
 #login_form {
 	float: left;
-	height: 330px;
 }
 
 #register_form {
 	float: right;
-}
-
-.error_message {
-	color: red;
-	background-color: yellow;
-}
-
-#register_msg {
-	color: #D6D7D6;
-	font-weight: bold;
-	background-color: #3AB700;
 }

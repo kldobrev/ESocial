@@ -20,6 +20,17 @@ ESocial::Controller::Root - Root Controller for ESocial
 
 =head1 METHODS
 
+=head2 begin
+
+Beginning actions
+
+=cut
+
+sub begin :Private {
+	my ($self, $c) = @_;
+	$c->stash(wrapper => 'wrappers/global.tt2');	
+}
+
 =head2 index
 
 The root page (/)

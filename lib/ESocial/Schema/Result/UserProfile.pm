@@ -51,7 +51,7 @@ __PACKAGE__->table("user_profile");
 =head2 name
 
   data_type: 'text'
-  is_nullable: 1
+  is_nullable: 0
 
 =head2 avatar_pic
 
@@ -87,7 +87,7 @@ __PACKAGE__->add_columns(
   "user_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "name",
-  { data_type => "text", is_nullable => 1 },
+  { data_type => "text", is_nullable => 0 },
   "avatar_pic",
   { data_type => "text", is_nullable => 1 },
   "birthdate",
@@ -130,8 +130,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-08 23:39:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:++e9pKTRSf4POezWzi0NQw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-09 16:50:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xZw4iPf6ZeOrTYlHTv7Puw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

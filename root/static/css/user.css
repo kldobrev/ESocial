@@ -4,8 +4,7 @@ body {
 }
 
 #wrapper {
-	background-color: #FFFFFF;
-	width: 1000px;
+	width: 950px;
 	margin: auto;
 	border: 1px solid #888888;
 	border-radius: 4px;
@@ -13,8 +12,13 @@ body {
 	font-size: 14px;
 }
 
+#header {
+	background-image: url('../images/header_back.jpg');
+	height: 80px;
+}
+
 #header h1 {
-	margin-left: 24px;	
+	margin-left: 36px;	
 	float: left;
 }
 
@@ -23,23 +27,26 @@ body {
 	font-family: "Comic Sans MS";
 	font-style: italic;
 	font-size: 36px;
+	color: black;
 }
 
-#header ul {
+#about_link {
 	margin-top: 36px;
-	list-style-type: none;
+	margin-right: 48px;
 	float: right;
-}
-
-#header ul li {
-	margin-right: 24px;
-	display: inline;
-}
-
-#header ul a {
-	font-size: 16px;
+	font-size: 20px;
+	text-decoration: none;
 }
 
 #body_contents {
 	clear: both;
+	padding: 16px;
+}
+
+#footer {
+	padding: 0px;
+	clear: both;
+	margin-bottom: -14px;
+	text-align: center;
+	background-color: #FFFFA2;
 }

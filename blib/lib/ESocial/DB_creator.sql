@@ -4,14 +4,14 @@ USE esocial;
 -- 							USERS AND PROFILES
 CREATE TABLE user (
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	pasword TEXT NOT NULL,
-	email VARCHAR(256) NOT NULL,
+	password VARCHAR(255) NOT NULL UNIQUE,
+	email VARCHAR(255) NOT NULL,
 	created TIMESTAMP NOT NULL
 );
 
 CREATE TABLE user_profile (
 	user_id INT NOT NULL PRIMARY KEY,
-	name TEXT,
+	name TEXT NOT NULL,
 	avatar_pic TEXT,
 	birthdate DATE,
 	hometown VARCHAR(255),

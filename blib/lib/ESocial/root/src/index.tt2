@@ -1,8 +1,26 @@
-<div id="login_field">
+<h1>Welcome to ESocial!</h1>
+<p>We provide the best way to be in touch with your friends and categorize in different groups.</p>
+<div id="login_form">
 	<h1>Login</h1>
-	<h2>Please, log in to use the application.</h2>
+	<h2>Please, log in to use the application:</h2>
+	<form action="[% c.uri_for('/login') %]" method="post">
+		<label for="log_user">Username:</label> <br/>
+		<input id="log_user" type="text" name="log_user" /> <br/>
+		<label for="log_pass">Password:</label> <br/>
+		<input id="log_pass" type="password" name="log_pass" /> <br/>
+		<input type="submit" value="Log in">
+	</form>
 </div>
-<div id="register_field">
+<div id="register_form">
 	<h1>Register</h1>
-	<h2>Or if you are not registered</h2>
+	<h2>Or if you are not registered, please complete the following form to do it:</h2>
+	<form action="[% c.uri_for('/register') %]" method="post">
+		<label for="reg_email">Email:</label> <br/>
+		<input id="reg_email" type="text" name="reg_email" /> <br />
+		<label for="reg_pass">Password:</label> <br/>
+		<input id="reg_pass" type="password" name="reg_pass" /> <br />
+		<label for="reg_rep_pass">Repeat password:</label> <br/>
+		<input id="reg_rep_pass" type="password" name="reg_rep_pass" /> <br />
+		<input type="submit" value="Sign up"/>
+	</form
 </div>

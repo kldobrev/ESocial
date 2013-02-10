@@ -52,13 +52,13 @@ __PACKAGE__->table("user");
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 256
+  size: 255
 
 =head2 email
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 256
+  size: 255
 
 =head2 created
 
@@ -73,9 +73,9 @@ __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "password",
-  { data_type => "varchar", is_nullable => 0, size => 256 },
+  { data_type => "varchar", is_nullable => 0, size => 255 },
   "email",
-  { data_type => "varchar", is_nullable => 0, size => 256 },
+  { data_type => "varchar", is_nullable => 0, size => 255 },
   "created",
   {
     data_type => "timestamp",
@@ -129,8 +129,8 @@ __PACKAGE__->might_have(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-09 02:36:13
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sK3j8+hqmmQbkjuncTFSWQ
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-09 20:43:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2nvi70hv5rM+yrG+l+1+tw
 
 __PACKAGE__->add_columns(
 	'password' => {

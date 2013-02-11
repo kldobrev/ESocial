@@ -6,8 +6,8 @@
 	<h2>Please, log in to use the application:</h2>
 	<p class="error_message">[% c.stash.error_login_msg or "" %]</p>
 	<form action="[% c.uri_for('/login') %]" method="post">
-		<label for="log_user">Username:</label> <br/>
-		<input id="log_user" type="text" name="log_user" /> <br/>
+		<label for="log_email">Email:</label> <br/>
+		<input id="log_email" type="text" name="log_email" /> <br/>
 		<label for="log_pass">Password:</label> <br/>
 		<input id="log_pass" type="password" name="log_pass" /> <br/>
 		<input type="submit" value="Log in">
@@ -27,5 +27,5 @@
 		<label for="reg_email">Email:</label> <br/>
 		<input id="reg_email" type="text" name="reg_email" /> <br />
 		<input type="submit" value="Sign up"/>
-	</form
+	</form>
 </div>

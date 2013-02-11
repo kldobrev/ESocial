@@ -4,7 +4,6 @@ body {
 }
 
 #wrapper {
-	background-image: url('../images/index_background.jpg');
 	width: 950px;
 	margin: auto;
 	border: 1px solid #888888;
@@ -19,6 +18,7 @@ body {
 }
 
 #header h1 {
+	padding: 0;
 	margin-left: 36px;	
 	float: left;
 }
@@ -41,7 +41,7 @@ body {
 
 #body_contents {
 	clear: both;
-	padding: 9px;
+	padding: 16px;
 }
 
 #footer {
@@ -56,31 +56,29 @@ body {
 	margin: 0;
 }
 
-#login_form, #register_form {
-	margin-bottom: 90px;
-	padding: 16px;
-	border: 1px solid #E6ED00;
-	border-radius: 9px;
-	background-color: #FDFFCE;
-	width: 400px;
+#user_menu {
+	margin-top: -14px;
+	background-image: url('../images/user_menu_grad.png');
+	background-repeat: repeat-x;
 }
 
-#login_form {
-	float: left;
-	height: 330px;
+#user_menu ul {
+	margin-left: 200px;
+	padding: 3px;
+	list-style-type: none;
 }
 
-#register_form {
-	float: right;
+#user_menu li {
+	display: inline;
 }
 
-.error_message {
+#user_menu a {
+	margin-left: 16px;
+	text-decoration: none;
+	color: black;
+	font-size: 15px;
+}
+
+#user_menu a:hover {
 	color: red;
-	background-color: yellow;
-}
-
-#register_msg {
-	color: #D6D7D6;
-	font-weight: bold;
-	background-color: #3AB700;
 }

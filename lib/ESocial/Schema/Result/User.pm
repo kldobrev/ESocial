@@ -99,6 +99,18 @@ __PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
+=head2 C<email_UNIQUE>
+
+=over 4
+
+=item * L</email>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("email_UNIQUE", ["email"]);
+
 =head2 C<password>
 
 =over 4
@@ -129,8 +141,8 @@ __PACKAGE__->might_have(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-09 20:43:19
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2nvi70hv5rM+yrG+l+1+tw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-10 23:20:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:J49HF+7WccpMw2C6i3QLLQ
 
 __PACKAGE__->add_columns(
 	'password' => {

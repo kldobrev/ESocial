@@ -23,8 +23,9 @@ Catalyst Controller.
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-
-    $c->response->body('Matched ESocial::Controller::Users in Users.');
+	my $user_id = $c->user->id;
+    #$c->response->body("Matched ESocial::Controller::Users in Users.");
+	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for("get_profile"), $user_id));
 }
 
 
@@ -87,6 +88,38 @@ sub register :Path('/register') {
 	$c->stash(template => 'index.tt2');
 }
 
+=head2 login
+
+Login for registered users
+
+=cut
+
+sub login :Path('/login') {
+	my ($self, $c) = @_;
+	my $email = $c->request->params->{log_email};
+	my $password = $c->request->params->{log_pass};
+	if($c->authenticate({email => $email, password => $password})) {
+		my $user_id = $c->user->id;
+		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for("profile/$user_id")));
+		return;
+	}
+	else {
+		$c->stash(error_login_msg => 'Wrong email or password.');
+		$c->stash(template => 'index.tt2');
+	}
+}
+
+=head2 logout
+
+Logout current user
+
+=cut
+
+sub logout :Path('/logout') {
+	my ($self, $c) = @_;
+	$c->logout;
+	$c->response->redirect($c->uri_for('/'));
+}
 
 __PACKAGE__->meta->make_immutable;
 

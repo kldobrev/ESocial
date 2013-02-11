@@ -86,32 +86,11 @@ sub about :Path('/about') {
 	$c->stash(template => 'about.tt2');
 }
 
-=head2 help
-
-Render 'help' page
-
-=cut
-
-sub help :Path('/help') {
-	my ($self, $c) = @_;
-	$c->stash(template => 'help.tt2');
-}
-
 =head2 auto
 
 Default action redirects guests or non logged useres to index page
 
 =cut
-
-sub auto :Private {
-	my ($self, $c) = @_;
-#	return 1 if($c->controller eq $c->controller('Users'));
-#	if(!$c->user_exists) {
-#		$c->response->redirect('index');
-#		return 0;
-#	}
-	return 1;
-}
 
 __PACKAGE__->meta->make_immutable;
 

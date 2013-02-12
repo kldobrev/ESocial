@@ -1,0 +1,6 @@
+# Ignore all avatar pics #
+##########################
+*.jpg
+*.jpeg
+*.png
+*.bmp

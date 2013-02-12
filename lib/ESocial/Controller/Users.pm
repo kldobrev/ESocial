@@ -23,9 +23,6 @@ Catalyst Controller.
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-	my $user_id = $c->user->id;
-    #$c->response->body("Matched ESocial::Controller::Users in Users.");
-	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for("get_profile"), $user_id));
 }
 
 
@@ -99,9 +96,8 @@ sub login :Path('/login') {
 	my $email = $c->request->params->{log_email};
 	my $password = $c->request->params->{log_pass};
 	if($c->authenticate({email => $email, password => $password})) {
-		my $user_id = $c->user->id;
-		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for("profile/$user_id")));
-		return;
+		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for("get_profile"), $c->user->id));
+		return 1;
 	}
 	else {
 		$c->stash(error_login_msg => 'Wrong email or password.');

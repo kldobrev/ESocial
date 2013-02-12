@@ -1,0 +1,35 @@
+<p id="status">[% c.flash.status_msg %]</p>
+<h1>Edit your profile:</h1>
+<div id="edit_space">
+	<form action="[% c.uri_for(c.controller.action_for('update_profile')) %]" method="post" enctype="multipart/form-data">
+		<label for="edit_avatar">Choose profile picture:</label> </br>
+		<input type="file" name="avatar" /> <br />
+		<span>Current profile picture:</span> <br />
+		<img src="[% c.uri_for('/static/avatar_pics/' _ c.user.user_profile.avatar_pic) %]" /> <br />
+		<label for="edit_name">Name:</label> <br />
+		<input id="edit_name" type="text" name="edit_name" value="[% c.user.user_profile.name %]" /> <br />
+		<label for="edit_gender">Gender:</label> <br />
+		<select id="edit_gender" name="edit_gender">
+			<option value="N" [% (c.stash.gender != 'M' && c.stash.gender != 'F') ? "selected='selected'" : "" %]>Not specified</option>
+			<option value="M" [% (c.stash.gender == 'M') ? "selected='selected'" : "" %]>Male</option>
+			<option value="F" [% (c.stash.gender == 'F') ? "selected='selected'" : "" %]>Female</option>
+		</select> <br />
+		<label for="edit_birthdate">Birthdate: (YYYY-MM-DD)</label> <br />
+		<input type="text" name="edit_year" value="[% c.user.user_profile.birthdate.year %]" maxlength="4" size="1" />-
+		<input type="text" name="edit_month" value="[% c.user.user_profile.birthdate.month %]" maxlength="2" size="1" />-
+		<input type="text" name="edit_day" value="[% c.user.user_profile.birthdate.day %]" maxlength="2" size="1" /> <br />
+		<label for="edit_showbd">Show birthdate in profile information?</label> 
+		<input id="edit_showbd" type="checkbox" name="edit_showbd" [% (c.user.user_profile.show_bdate == 1) ? 'checked' : '' %] /> <br />
+		<label for="edit_location">Location:</label> <br />
+		<input type="text" name="edit_location" value="[% c.user.user_profile.location %]" /> <br />
+		<label for="edit_hometown">Hometown:</label> <br />
+		<input type="text" name="edit_hometown" value="[% c.user.user_profile.hometown %]" /> <br />
+		<label for="edit_about">About:</label> <br />
+		<textarea id="edit_about" name="edit_about" rows="4" cols="40">[% c.user.user_profile.about %]</textarea> <br />
+		<input id="edit_submit" type="submit" value="Save changes" />
+	</form>
+	<div id="delete_account">
+		<p>Be extra careful! If you push this button all data related to you will be deleted from our servers and database and you won't be asked for conformation once you push it!</p>
+		<a href="[% c.uri_for(c.controller.action_for('delete_account')) %]">Delete account</a>
+	</div>
+</div>

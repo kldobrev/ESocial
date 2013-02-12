@@ -12,8 +12,10 @@ CREATE TABLE user (
 CREATE TABLE user_profile (
 	user_id INT NOT NULL PRIMARY KEY,
 	name TEXT NOT NULL,
+	gender char(1),
 	avatar_pic TEXT,
 	birthdate DATE,
+	show_bdate SMALLINT DEFAULT 0,
 	hometown VARCHAR(255),
 	location VARCHAR(255),
 	about TEXT

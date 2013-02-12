@@ -82,3 +82,85 @@ body {
 #user_menu a:hover {
 	color: red;
 }
+
+#profile_basic {
+	padding: 0;
+	width:	400px;
+}
+
+#profile_basic img {
+	float: left;
+	height: 180px;
+	width: 180px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+#profile_basic p {
+	float: right;
+	width: 200px;
+}
+
+.user_button {
+	text-decoration: none;
+	padding: 3px;
+	color: black;
+	background-image: url('../images/user_menu_grad.png');
+	background-repeat: repeat-x;
+	border: 1px solid #BDC400;
+	border-radius: 6px;	
+}
+
+#profile_basic a {
+	margin-right: 130px;
+	float: right;
+	padding: 3px;
+}
+
+h2 {
+	clear: both;
+}
+
+#edit_space img {
+	height: 150px;
+	width: 150px;
+	margin-bottom: 9px;
+}
+
+#edit_space input {
+	margin-bottom: 16px;
+}
+
+#edit_submit, #delete_account a {
+	margin-left: 360px;
+	margin-top: 30px;
+	text-decoration: none;
+	padding: 3px;
+	color: black;
+	background-repeat: repeat-x;
+	border: 1px solid #BDC400;
+	border-radius: 6px;	
+}
+
+#edit_submit {
+	background-image: url('../images/user_menu_grad.png');
+}
+
+#delete_account p {
+	background-color: red;
+	color: yellow;
+}
+
+#delete_account a {
+	margin-top: 36px;
+	margin-bottom: 40px;
+	background-image: url('../images/delete.png');
+}
+
+#status {
+	width: 120px;
+	background-color: #2F9400;
+	color: #DCDCDC;
+}

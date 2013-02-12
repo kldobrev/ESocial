@@ -53,6 +53,12 @@ __PACKAGE__->table("user_profile");
   data_type: 'text'
   is_nullable: 0
 
+=head2 gender
+
+  data_type: 'char'
+  is_nullable: 1
+  size: 1
+
 =head2 avatar_pic
 
   data_type: 'text'
@@ -62,6 +68,12 @@ __PACKAGE__->table("user_profile");
 
   data_type: 'date'
   datetime_undef_if_invalid: 1
+  is_nullable: 1
+
+=head2 show_bdate
+
+  data_type: 'smallint'
+  default_value: 0
   is_nullable: 1
 
 =head2 hometown
@@ -88,10 +100,14 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "name",
   { data_type => "text", is_nullable => 0 },
+  "gender",
+  { data_type => "char", is_nullable => 1, size => 1 },
   "avatar_pic",
   { data_type => "text", is_nullable => 1 },
   "birthdate",
   { data_type => "date", datetime_undef_if_invalid => 1, is_nullable => 1 },
+  "show_bdate",
+  { data_type => "smallint", default_value => 0, is_nullable => 1 },
   "hometown",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "location",
@@ -130,8 +146,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-09 16:50:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xZw4iPf6ZeOrTYlHTv7Puw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-11 16:28:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TVRnqgU7TgRbH8I3rvdn9g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

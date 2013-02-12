@@ -1,2 +1,19 @@
 <h1>Welcome, [% c.stash.profile.name %]</h1>
+<div id="profile_basic">
+	<img src="[% c.stash.avatar %]" alt="Profile pic" />
+	<p>
+		<span class="bold">Gender:</span> [% c.stash.gender %] <br />
+		<span class="bold">Current location:</span> [% c.stash.profile.location %] <br />
+		<span class="bold">Hometown:</span> [% c.stash.profile.hometown %] <br />
+		<span class="bold">Age:</span> [% c.stash.age %] <br />
+		[% IF c.stash.profile.show_bdate %]
+			<span class="bold">Birthdate:</span> [% c.stash.profile.birthdate %] <br />
+		[% END %]
+	</p>
+	[% IF c.stash.profile.id == c.user.id %]
+		<a class="user_button" href="[% c.uri_for(c.controller.action_for('edit_profile')) %]">Edit profile</a>
+	[% END %]
+</div>
+<h2>About:</h2>
+<p id="about">[% c.stash.profile.about %]</p>
 

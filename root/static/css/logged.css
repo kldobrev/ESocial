@@ -83,8 +83,11 @@ body {
 	color: red;
 }
 
+/* -------------------------------Profile page--------------------------------------- */
+
 #profile_basic {
 	padding: 0;
+	float: left;
 	width:	400px;
 }
 
@@ -98,9 +101,16 @@ body {
 	font-weight: bold;
 }
 
-#profile_basic p {
+#basic_data {
 	float: right;
 	width: 200px;
+}
+
+#basic_data div {
+}
+
+#basic_data a {
+	margin-left: 4px;
 }
 
 .user_button {
@@ -113,15 +123,11 @@ body {
 	border-radius: 6px;	
 }
 
-#profile_basic a {
-	margin-right: 130px;
-	float: right;
-	padding: 3px;
-}
-
 h2 {
 	clear: both;
 }
+
+/* -------------------------------Edit profile--------------------------------------- */
 
 #edit_space img {
 	height: 150px;
@@ -163,4 +169,17 @@ h2 {
 	width: 120px;
 	background-color: #2F9400;
 	color: #DCDCDC;
+}
+
+#other {
+	float: right
+}
+
+#other ul {
+	list-style-type: none;
+}
+/* -------------------------------Search--------------------------------------- */
+
+#search_page form {
+	margin-left: 160px;
 }

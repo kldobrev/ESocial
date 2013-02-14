@@ -75,6 +75,26 @@ sub calc_age {
 	return $age;
 }
 
+sub button_values {
+	my ($c, $profile) = (shift, shift);
+	if($c->user->id == $profile->id) {
+		$c->stash(is_own_profile => 1);
+		my $action_str = $c->uri_for($c->controller->action_for('edit_profile'));
+		return {controller => 'Profile', action => $action_str, name => 'Edit Profile'};
+	}
+	else {
+		my $has_asked = $c->model('ESocial::FriendPair')->search({ user_id => $profile->id, friend_id => $c->user->id, status => 0})->single or 0;
+		return 0 if $has_asked;
+		my $f_pair = $c->model('ESocial::FriendPair')->find({ user_id => $c->user->id, friend_id => $profile->id}) or 0;
+		my $action_str = $c->uri_for($c->controller('Friend')->action_for('ask_friend'), $profile->id);
+		return {controller => 'Friend', action => $action_str, name => 'Make friends'} if($f_pair == 0);
+		$action_str = $c->uri_for($c->controller('Friend')->action_for('cancel_request'), $profile->id);
+		return {controller => 'Friend', action => $action_str, name => 'End request'} if($f_pair->status == 0);
+		$action_str = $c->uri_for($c->controller('Friend')->action_for('unfriend'), $profile->id);
+		return {controller => 'Friend', action => $action_str, name => 'Unfriend'};
+	}
+}
+
 =head2 get_profile
 
 Redirects user to main profile page
@@ -94,10 +114,15 @@ sub get_profile :Path('id') :Args(1) {
 	if($user_profile->birthdate) {
 		$c->stash(age => calc_age($user_profile->birthdate));	
 	}
-	
+	my $but_vals = button_values($c, $user_profile);
+	my $requests = $c->model('ESocial::FriendPair')->search({friend_id => $c->user->id, status => 0});
+	my $friends = $c->model('ESocial::FriendPair')->search({friend_id => $user_profile->id, status => 1})->slice(0..4);
+	$c->stash(but_vals => $but_vals);
 	$c->stash(gender => $gender);
 	$c->stash(avatar => $avatar);
 	$c->stash(profile => $user_profile);
+	$c->stash(requests => $requests);
+	$c->stash(friends => $friends);
 	$c->stash(template => 'profile/profile_data.tt2');
 }
 
@@ -157,12 +182,12 @@ This action deletes all user data from the database. It felt so depressing to ev
 
 =cut
 
-sub delete_account {
-	#my ($self, $c) = @_;
-	#my $doomed_user = $c->model('ESocial::User')->find($c->user->id);
-	#$c->user->logout;
-	#$doomed_user->delete;
-	#$c->response->redirect($c->uri_for('/'));
+sub delete_account :Local {
+	my ($self, $c) = @_;
+	my $doomed_user = $c->model('ESocial::User')->find($c->user->id);
+	$c->user->logout;
+	$doomed_user->delete;
+	$c->response->redirect($c->uri_for('/'));
 }
 
 __PACKAGE__->meta->make_immutable;

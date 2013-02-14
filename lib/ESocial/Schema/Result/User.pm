@@ -141,8 +141,8 @@ __PACKAGE__->might_have(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-10 23:20:40
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:J49HF+7WccpMw2C6i3QLLQ
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-14 12:07:38
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4WSCPTs8gOvdz1tnejOYAA
 
 __PACKAGE__->add_columns(
 	'password' => {

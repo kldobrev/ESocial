@@ -1,0 +1,18 @@
+<div id="search_page">
+	<form method="post" action="[% c.uri_for(c.controller.action_for('results')) %]">
+		<label for="search_bar">SEARCH:</label>
+		<input id="search_bar" type="text" name="search_query" />
+		<select name="search_term">
+			<option value="UserProfile">People</option>
+		</search>
+		<input type="Submit" value="Go" />
+	</form>
+	<div id="search_results">
+		<h2>Results</h2>
+		<ul>
+			[% FOREACH elem IN c.stash.result_set -%]
+				<li><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), elem.id) %]"><img/>[% elem.name %]</a></li>
+			[% END %]
+		</ul>
+	</div>
+</div>

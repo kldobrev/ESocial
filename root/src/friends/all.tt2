@@ -1,0 +1,7 @@
+<div id="friends_list">
+	<ul>
+		[% FOREACH friend IN friends.all %]
+			<li><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), friend.user.id) %]">[% friend.user.name _ ", " _  friend.user.gender _ ", " _ friend.user.location %]</li>
+		[% END %]
+	</ul>
+</div>

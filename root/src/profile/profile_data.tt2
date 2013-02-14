@@ -1,19 +1,50 @@
-<h1>Welcome, [% c.stash.profile.name %]</h1>
+<h1>[% c.stash.profile.name %]</h1>
 <div id="profile_basic">
 	<img src="[% c.stash.avatar %]" alt="Profile pic" />
+	<div id="basic_data">
 	<p>
 		<span class="bold">Gender:</span> [% c.stash.gender %] <br />
 		<span class="bold">Current location:</span> [% c.stash.profile.location %] <br />
 		<span class="bold">Hometown:</span> [% c.stash.profile.hometown %] <br />
 		<span class="bold">Age:</span> [% c.stash.age %] <br />
-		[% IF c.stash.profile.show_bdate %]
-			<span class="bold">Birthdate:</span> [% c.stash.profile.birthdate %] <br />
-		[% END %]
-	</p>
-	[% IF c.stash.profile.id == c.user.id %]
-		<a class="user_button" href="[% c.uri_for(c.controller.action_for('edit_profile')) %]">Edit profile</a>
+	[% IF c.stash.profile.show_bdate %]
+		<span class="bold">Birthdate:</span> [% c.stash.profile.birthdate %] <br />
 	[% END %]
-</div>
+	</p>
+	[% IF !c.stash.but_vals %]
+		<div>
+			<p><span class="bold">Asked you to become friends:</class></p>
+			<a class= "user_button" href="[% c.uri_for(c.controller('Friend').action_for('accept'), profile.user_id) %]">Accept</a>
+			<a class= "user_button" href="[% c.uri_for(c.controller('Friend').action_for('decline'), profile.user_id) %]">Decline</a>
+		</div>
+	[% ELSE %]
+		<a class="user_button" href="[% c.stash.but_vals.action %]">[% c.stash.but_vals.name %]</a>
+	[% END %]
+	</div>
 <h2>About:</h2>
 <p id="about">[% c.stash.profile.about %]</p>
-
+</div>
+<div id="other">
+	[% IF c.stash.is_own_profile && c.stash.requests.count > 0 %]
+		<h2>You've got [% c.stash.requests.count %] friend requests:</h2>
+		<ul id="requests">
+			[% FOREACH request IN c.stash.requests.all -%]
+				<li>
+					<a href="[% c.uri_for(c.controller.action_for('get_profile'), request.user_id) %]"> [% request.user.name _ ", " _ request.user.location %]</a>, 
+					<a href="[% c.uri_for(c.controller('Friend').action_for('accept'), request.user_id) %]">Accept</a>
+					<a href="[% c.uri_for(c.controller('Friend').action_for('decline'), request.user_id) %]">Decline</a>
+				</li>
+			[% END -%]
+		</ul>
+	[% END %]
+	<h2>Friends ([% c.stash.friends.count %])</h2>
+	<ul>
+		[% FOREACH friend IN c.stash.friends.all %]
+			<li><a href="[% c.uri_for(c.controller.action_for('get_profile'), friend.user_id) %]">[% friend.user.name _ ", " _ friend.user.location %]</a></li>
+		[% END %]
+	</ul>
+	<a href="[% c.uri_for('/friend/friend_list', profile.user_id) %]">See all of [% profile.name %]'s friends</a>
+</div>
+<h2>Interests</h2>
+<h3>Pages</h3>
+<h3>Groups</h3>

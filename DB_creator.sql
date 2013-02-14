@@ -22,3 +22,30 @@ CREATE TABLE user_profile (
 );
 
 ALTER TABLE user_profile ADD FOREIGN KEY(user_id) REFERENCES user(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE TABLE friend_pair(
+	user_id INT NOT NULL,
+	friend_id INT NOT NULL,
+	status INT DEFAULT 0,
+	PRIMARY KEY(user_id, friend_id)
+);
+
+ALTER TABLE friend_pair ADD FOREIGN KEY(user_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE friend_pair ADD FOREIGN KEY(friend_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE TABLE friend_group (
+	user_id INT NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	PRIMARY KEY(user_id, name)
+);
+
+ALTER TABLE friend_group ADD FOREIGN KEY(user_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE TABLE friend_group_member(
+	user_id INT NOT NULL,
+	name VARCHAR(64) NOT NULL,
+	friend_id INT NOT NULL,
+	PRIMARY KEY(user_id, name, friend_id)
+);
+
+ALTER TABLE friend_group_member ADD FOREIGN KEY(user_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;

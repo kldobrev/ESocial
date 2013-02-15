@@ -1,0 +1,19 @@
+<h2>Inbox ([% unread %])</h2>
+<div id="messages">
+	<table>
+		<tr>
+			<th>From</th>
+			<th>Title:</th>
+			<th>Sent</th>
+			<th>Delete message</th>
+		</th>
+		[% FOREACH msg IN messages.all %]
+			<tr [% (msg.has_read == 0) ? "class='unread'" : '' %]>
+				<td><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), msg.from_id) %]">[% msg.from.name %]</a></td>
+				<td><a href="[% c.uri_for(c.controller.action_for('view_message'), msg.id) %]">[% msg.title or 'No title' %]</a></t>
+				<td>[% msg.created %]</t>
+				<td><a href="[% c.uri_for(c.controller.action_for('delete_message'), msg.id) %]">Delete message</a></t>
+			</tr>
+		[% END %]
+	</table>
+</div>

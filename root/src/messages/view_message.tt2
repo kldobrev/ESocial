@@ -1,0 +1,9 @@
+<div id="message_data">
+	<a href="[% c.uri_for(c.controller.action_for('message_list')) %]">Back to messages</a>
+	<p><span class="bold">From:</span> [% message.from.name %] <br />
+	<span class="bold">Received on:</span> [% message.created %] <br />
+	<span class="bold">About:</span> [% message.title %]<br /> <br />
+	[% message.content %]
+	</p>
+	<a class="user_button" href="[% c.uri_for(c.controller.action_for('delete_message'), message.id) %]">Delete Message</a>
+</div>

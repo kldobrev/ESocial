@@ -1,0 +1,8 @@
+<h2>Write a message:</h2>
+<form action="[% c.uri_for(c.controller.action_for('send_message'), profile_id) %]" method="post">
+	<label for="m_title">Title:</label> <br />
+	<input id="m_title" type="text" name="m_title" /> <br />
+	<label for="m_content">Content:</label> <br />
+	<textarea id="m_content" name="m_content" rows="6" cols="48"></textarea> <br />
+	<input class="user_button" type="submit" value="Send">
+</form>

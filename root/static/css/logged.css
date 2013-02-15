@@ -183,3 +183,10 @@ h2 {
 #search_page form {
 	margin-left: 160px;
 }
+
+/* -------------------------------Messages--------------------------------------- */
+
+.unread a {
+	background-color: yellow;
+	color: red
+}

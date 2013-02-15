@@ -50,3 +50,16 @@ CREATE TABLE friend_group_member(
 
 ALTER TABLE friend_group_member ADD FOREIGN KEY(user_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE friend_group_member ADD FOREIGN KEY(friend_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE TABLE message(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	from_id INT NOT NULL,
+	to_id INT NOT NULL,
+	created TIMESTAMP NOT NULL,
+	title VARCHAR(255),
+	content TEXT NOT NULL,
+	has_read INT DEFAULT 0
+);
+
+ALTER TABLE message ADD FOREIGN KEY(from_id) REFERENCES  user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE message ADD FOREIGN KEY(to_id) REFERENCES  user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;

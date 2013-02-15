@@ -76,7 +76,7 @@ __PACKAGE__->table("message");
 =head2 content
 
   data_type: 'text'
-  is_nullable: 1
+  is_nullable: 0
 
 =head2 has_read
 
@@ -103,7 +103,7 @@ __PACKAGE__->add_columns(
   "title",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "content",
-  { data_type => "text", is_nullable => 1 },
+  { data_type => "text", is_nullable => 0 },
   "has_read",
   { data_type => "integer", default_value => 0, is_nullable => 1 },
 );
@@ -153,8 +153,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-15 20:34:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ViTKLBot+u7wf3yI+AFEgg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-15 20:40:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gADK7iclPU9vpGfMrPHvNw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

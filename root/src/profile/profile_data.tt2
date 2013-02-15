@@ -19,6 +19,11 @@
 		</div>
 	[% ELSE %]
 		<a class="user_button" href="[% c.stash.but_vals.action %]">[% c.stash.but_vals.name %]</a>
+		[% IF !is_own_profile %]
+		<br />
+		<br />
+		<a class="user_button" href="[% c.uri_for(c.controller('Messages').action_for('create_message'), profile.user_id) %]">Send message</a>
+		[% END %]
 	[% END %]
 	</div>
 <h2>About:</h2>

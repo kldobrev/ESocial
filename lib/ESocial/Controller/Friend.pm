@@ -152,7 +152,10 @@ View list of all ou the user's friends
 sub friend_list :Local :Args(1) {
 	my ($self, $c, $user_id) = @_;
 	my $friend_l = $c->model('ESocial::FriendPair')->search(friend_id => $user_id);
+	my $group_l = $c->model('ESocial::FriendGroup')->search(user_id => $user_id);
+	$c->stash(profile_id => $user_id);
 	$c->stash(friends => $friend_l);
+	$c->stash(friend_groups => $group_l);
 	$c->stash(template => 'friends/all.tt2');
 }
 

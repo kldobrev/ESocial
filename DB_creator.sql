@@ -49,3 +49,4 @@ CREATE TABLE friend_group_member(
 );
 
 ALTER TABLE friend_group_member ADD FOREIGN KEY(user_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE friend_group_member ADD FOREIGN KEY(friend_id) REFERENCES user_profile(user_id) ON UPDATE CASCADE ON DELETE CASCADE;

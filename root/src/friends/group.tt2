@@ -1,0 +1,26 @@
+<a href="[% c.uri_for(c.controller('Friend').action_for('friend_list'), c.user.id) %]">Back to friends</a>
+<h2>[% group_name _ ' group (' _ friends.count  _ ')' %]</h2>
+<ul>
+	[% FOREACH friend IN friends.all %]
+		<li>
+			<a href="">[% friend.friend.name _ ", " _ friend.friend.gender _ ", " _ friend.friend.location %]</a>  
+			[% IF profile_id == c.user.id %]
+				<a href="[% c.uri_for(c.controller.action_for('remove_friend'), group_name, friend.friend_id) %]">Remove from group</a>
+			[% END %]
+		</li>
+	[% END %]
+</ul>
+<div>
+	[% IF profile_id == c.user.id %]
+		<a href="[% c.uri_for(c.controller.action_for('delete_group'), group_name) %]">Delete group</a>
+		<h2>Friends you can add:</h2>
+		<ul>
+			[% FOREACH fr IN not_included_fr.all %]
+				<li>
+					<a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), fr.friend.id) %]">[% fr.friend.name _ ", " _ fr.friend.gender _ ", " _ fr.friend.location %]</a>  
+					<a href="[% c.uri_for(c.controller.action_for('add_friend'), group_name, fr.friend_id) %]">Add to group</a>
+				</li>
+			[% END %]
+		</ul>
+	[% END %]
+</div>

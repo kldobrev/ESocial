@@ -130,6 +130,51 @@ __PACKAGE__->set_primary_key("user_id");
 
 =head1 RELATIONS
 
+=head2 friend_group_member_friends
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::FriendGroupMember>
+
+=cut
+
+__PACKAGE__->has_many(
+  "friend_group_member_friends",
+  "ESocial::Schema::Result::FriendGroupMember",
+  { "foreign.friend_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 friend_group_members
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::FriendGroupMember>
+
+=cut
+
+__PACKAGE__->has_many(
+  "friend_group_members",
+  "ESocial::Schema::Result::FriendGroupMember",
+  { "foreign.user_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 friend_groups
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::FriendGroup>
+
+=cut
+
+__PACKAGE__->has_many(
+  "friend_groups",
+  "ESocial::Schema::Result::FriendGroup",
+  { "foreign.user_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 friend_pair_friends
 
 Type: has_many
@@ -160,6 +205,36 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 messages_from
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::Message>
+
+=cut
+
+__PACKAGE__->has_many(
+  "messages_from",
+  "ESocial::Schema::Result::Message",
+  { "foreign.from_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 messages_to
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::Message>
+
+=cut
+
+__PACKAGE__->has_many(
+  "messages_to",
+  "ESocial::Schema::Result::Message",
+  { "foreign.to_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user
 
 Type: belongs_to
@@ -176,8 +251,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-14 12:07:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7/RUerM/9ZoNTdzfTVhjIw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-15 20:34:17
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RGwa1d5oBCh/lhqzTDriPw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

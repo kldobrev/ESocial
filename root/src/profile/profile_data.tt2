@@ -72,8 +72,8 @@
 			[% FOREACH post IN posts.all %]
 				[% IF (post.privacy_lev == 0) || (post.privacy_lev == 1 && is_friend) || (is_own_profile) %]
 				<li>
-					<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), post.post.author.user.id) %]">[% post.post.author.name %]</a></span>  [% post.post.created %] <br />
-					[% post.post.content %] <br />
+					<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), post.post.author.user.id) %]">[% post.post.author.name %]</a></span> [% post.post.content %] <br />
+					[% post.post.created %] <br />
 					[% IF is_own_profile || (c.user.id == post.post.author.id)  %]
 						<a href="[% c.uri_for(c.controller('Post').action_for('delete_wall_post'), post.post.id, profile.user.id) %]">Delete</a>
 					[% END %]

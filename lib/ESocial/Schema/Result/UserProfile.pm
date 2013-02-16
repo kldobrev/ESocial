@@ -145,6 +145,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 data_pages
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::DataPage>
+
+=cut
+
+__PACKAGE__->has_many(
+  "data_pages",
+  "ESocial::Schema::Result::DataPage",
+  { "foreign.creator" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 friend_group_member_friends
 
 Type: has_many
@@ -250,6 +265,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 pages_like
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::PageLike>
+
+=cut
+
+__PACKAGE__->has_many(
+  "pages_like",
+  "ESocial::Schema::Result::PageLike",
+  { "foreign.profile_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 posts
 
 Type: has_many
@@ -295,9 +325,19 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 pages
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 17:59:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QkPl46llw6TKtgkSLwvU1Q
+Type: many_to_many
+
+Composing rels: L</pages_like> -> page
+
+=cut
+
+__PACKAGE__->many_to_many("pages", "pages_like", "page");
+
+
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 23:15:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:b5p1PkKIy+TTAwjouXlYrw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

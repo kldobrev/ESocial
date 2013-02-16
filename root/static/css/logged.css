@@ -143,6 +143,7 @@ h2 {
 }
 
 #post_list li {
+	padding: 3px;
 	border-bottom: 1px solid black;
 }
 

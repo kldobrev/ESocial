@@ -15,10 +15,9 @@
 			<div id="user_menu">
 			   <ul>
 					<a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), c.user.id) %]">Profile</a>
-					<a href="">News</a>
 					<a href="[% c.uri_for(c.controller('Messages').action_for('message_list')) %]">Messages</a>
 					<a href="[% c.uri_for(c.controller('Search').action_for('index')) %]">Search</a>
-					<a href="">Create content</a>
+					<a href="[% c.uri_for(c.controller('Profile').action_for('get_create_page')) %]">Create content</a>
 					<a href="[% c.uri_for('/logout') %]">Logout</a>
 			   </ul>
 			</div>

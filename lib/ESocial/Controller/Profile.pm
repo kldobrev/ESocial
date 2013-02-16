@@ -119,7 +119,6 @@ sub get_profile :Path('id') :Args(1) {
 	my $friends = $c->model('ESocial::FriendPair')->search({user_id => $user_profile->id, status => 1})->slice(0..4);
 	my $posts = $c->model('ESocial::WallPost')->search({wall_id => $id}, {order_by => {-desc => 'post_id'}});
 	my $is_friend = $friends->search(friend_id => $c->user->id)->single or 0;
-	#my %comments = map {} $posts->all;
 
 	$c->stash(but_vals => $but_vals);
 	$c->stash(gender => $gender);
@@ -180,6 +179,17 @@ sub update_profile :Path('uptate') {
 	$user_profile->update;
 	$c->flash(status_msg => 'Changes saved');
 	$c->response->redirect($c->uri_for('edit'));
+}
+
+=head2 get_create_page
+
+Renders 'create content' template
+
+=cut
+
+sub get_create_page :Local {
+	my ($self, $c) = @_;
+	$c->stash(template => 'create_content.tt2');
 }
 
 =head2 delete_account

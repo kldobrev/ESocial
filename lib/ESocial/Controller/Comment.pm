@@ -105,6 +105,7 @@ sub delete_wall_comment :Local :Args(2) {
 	delete_comment($c, $comment_id);
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 }
+
 __PACKAGE__->meta->make_immutable;
 
 1;

@@ -1,0 +1,15 @@
+<div id="create_content">
+	<h1>Create content</h1>
+	<div id="page">
+		<h2>Create page</h2>
+		<form action="[% c.uri_for(c.controller('Page').action_for('create_page')) %]" method="post" >
+			<label for="p_name">Page name:</label> <br />
+			<input id="p_name" type="text" name="p_name" /> <br />
+			<label for="p_about">About</label> <br />
+			<textarea id="p_about" name="p_about" rows="4" cols="64"></textarea> <br />
+			<input class="user_button" type="submit" value="Create page">
+		</form>
+	</div>
+	<div id="group">
+	</div>
+</div>

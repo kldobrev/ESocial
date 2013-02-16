@@ -116,13 +116,18 @@ sub get_profile :Path('id') :Args(1) {
 	}
 	my $but_vals = button_values($c, $user_profile);
 	my $requests = $c->model('ESocial::FriendPair')->search({friend_id => $c->user->id, status => 0});
-	my $friends = $c->model('ESocial::FriendPair')->search({friend_id => $user_profile->id, status => 1})->slice(0..4);
+	my $friends = $c->model('ESocial::FriendPair')->search({user_id => $user_profile->id, status => 1})->slice(0..4);
+	my $posts = $c->model('ESocial::WallPost')->search({wall_id => $id}, {order_by => {-desc => 'post_id'}});
+	my $is_friend = $friends->search(friend_id => $c->user->id)->single or 0;
+
 	$c->stash(but_vals => $but_vals);
 	$c->stash(gender => $gender);
 	$c->stash(avatar => $avatar);
 	$c->stash(profile => $user_profile);
 	$c->stash(requests => $requests);
 	$c->stash(friends => $friends);
+	$c->stash(posts => $posts);
+	$c->stash(is_friend => $is_friend);
 	$c->stash(template => 'profile/profile_data.tt2');
 }
 

@@ -28,28 +28,58 @@
 	</div>
 <h2>About:</h2>
 <p id="about">[% c.stash.profile.about %]</p>
-</div>
-<div id="other">
-	[% IF c.stash.is_own_profile && c.stash.requests.count > 0 %]
-		<h2>You've got [% c.stash.requests.count %] friend requests:</h2>
-		<ul id="requests">
-			[% FOREACH request IN c.stash.requests.all -%]
-				<li>
-					<a href="[% c.uri_for(c.controller.action_for('get_profile'), request.user_id) %]"> [% request.user.name _ ", " _ request.user.location %]</a>, 
-					<a href="[% c.uri_for(c.controller('Friend').action_for('accept'), request.user_id) %]">Accept</a>
-					<a href="[% c.uri_for(c.controller('Friend').action_for('decline'), request.user_id) %]">Decline</a>
-				</li>
-			[% END -%]
-		</ul>
-	[% END %]
-	<h2>Friends ([% c.stash.friends.count %])</h2>
-	<ul>
-		[% FOREACH friend IN c.stash.friends.all %]
-			<li><a href="[% c.uri_for(c.controller.action_for('get_profile'), friend.user_id) %]">[% friend.user.name _ ", " _ friend.user.location %]</a></li>
-		[% END %]
-	</ul>
-	<a href="[% c.uri_for('/friend/friend_list', profile.user_id) %]">See all of [% profile.name %]'s friends</a>
-</div>
 <h2>Interests</h2>
 <h3>Pages</h3>
 <h3>Groups</h3>
+</div>
+<div id="other">
+	<div id="friend_area">
+		[% IF c.stash.is_own_profile && c.stash.requests.count > 0 %]
+			<h2>You've got [% c.stash.requests.count %] friend requests:</h2>
+			<ul id="requests">
+				[% FOREACH request IN c.stash.requests.all -%]
+					<li>
+						<a href="[% c.uri_for(c.controller.action_for('get_profile'), request.user_id) %]"> [% request.user.name _ ", " _ request.user.location %]</a>, 
+						<a href="[% c.uri_for(c.controller('Friend').action_for('accept'), request.user_id) %]">Accept</a>
+						<a href="[% c.uri_for(c.controller('Friend').action_for('decline'), request.user_id) %]">Decline</a>
+					</li>
+				[% END -%]
+			</ul>
+		[% END %]
+		<h2>Friends ([% c.stash.friends.count %])</h2>
+		<ul>
+			[% FOREACH friend IN c.stash.friends.all %]
+				<li><a href="[% c.uri_for(c.controller.action_for('get_profile'), friend.friend.id) %]">[% friend.friend.name _ ", " _ friend.friend.location %]</a></li>
+			[% END %]
+		</ul>
+		<a href="[% c.uri_for('/friend/friend_list', profile.user_id) %]">See all of [% profile.name %]'s friends</a>
+	</div>
+	<div id="wall">
+		<h2>Wall:</h2>
+		<form action="[% c.uri_for(c.controller('Post').action_for('create_wall_post'), profile.user_id) %]" method="post">
+			<textarea name="p_content" rows="2" cols="68">Write your thoughts</textarea> <br />
+			[% IF is_own_profile %]
+				<label for="visibility">Visibility:</label>
+				<select id="visibility" name="p_privacy">
+					<option value="0" selected="selected">Public</option>
+					<option value="1">Friends</option>
+					<option value="2">Private</option>
+				</select>
+			[% END %]
+			<input class="user_button" type="submit" value="Post it" />
+		</form>
+		<ul id="post_list">
+			[% FOREACH post IN posts.all %]
+				[% IF (post.privacy_lev == 0) || (post.privacy_lev == 1 && is_friend) || (is_own_profile) %]
+				<li>
+					<span class="bold">[% post.post.author.name %]</span>  [% post.post.created %] <br />
+					[% post.post.content %] <br />
+					[% IF c.user.id == post.post.author.id %]
+						<a href="[% c.uri_for(c.controller('Post').action_for('delete_post'), post.post.id, profile.user.id) %]">Delete</a>
+					[% END %]
+				</li>
+				[% END %]
+			[% END %]
+		</ul>
+	</div>
+</div>

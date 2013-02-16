@@ -65,7 +65,6 @@ sub begin :Private {
 	$c->stash(wrapper => 'wrappers/logged.tt2');
 }
 
-__PACKAGE__->meta->make_immutable;
 
 =head2 ask_friend
 
@@ -158,5 +157,7 @@ sub friend_list :Local :Args(1) {
 	$c->stash(friend_groups => $group_l);
 	$c->stash(template => 'friends/all.tt2');
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

@@ -73,7 +73,7 @@ Get all of user's messages
 
 sub message_list :Local {
 	my ($self, $c) = @_;
-	my $messages = $c->model('ESocial::Message')->search(to_id => $c->user->id);
+	my $messages = $c->model('ESocial::Message')->search({to_id => $c->user->id}, {order_by => { -desc => 'created' }});
 	my $unread = $c->model('ESocial::Message')->search(to_id => $c->user->id, has_read => 0)->count;
 	$c->stash(messages => $messages);
 	$c->stash(unread => $unread);
@@ -122,6 +122,7 @@ sub view_message :Local :Args(1) {
 	my $message = $c->model('ESocial::Message')->find($msg_id);
 	if($message->has_read == 0) {
 		$message->has_read(1);
+		$message->created($message->created);
 		$message->update;
 	}
 	$c->stash(message => $message);

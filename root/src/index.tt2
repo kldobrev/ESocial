@@ -1,5 +1,5 @@
 <h1>Welcome to ESocial!</h1>
-<p>We provide the best way to be in touch with your friends and categorize in different groups.</p>
+<p>We provide a great way to be in touch with your friends and meet new people.</p>
 <div id="login_form">
 	<p id="register_msg"> [% c.stash.reg_success_msg or "" %] </p>
 	<h1>Login</h1>

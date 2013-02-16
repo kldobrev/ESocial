@@ -127,6 +127,24 @@ h2 {
 	clear: both;
 }
 
+#other {
+	width: 490px;
+}
+
+#wall textarea {
+	resize: none;
+}
+
+#post_list {
+	font-size: 15px;
+	list-style-type: none;
+	padding-left: 0;
+	margin-bottom: 80px;
+}
+
+#post_list li {
+	border-bottom: 1px solid black;
+}
 /* -------------------------------Edit profile--------------------------------------- */
 
 #edit_space img {
@@ -186,7 +204,11 @@ h2 {
 
 /* -------------------------------Messages--------------------------------------- */
 
+.unread {
+	background-color: yellow;
+}
+
 .unread a {
 	background-color: yellow;
-	color: red
+	color: green;
 }

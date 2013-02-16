@@ -235,6 +235,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 posts
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::Post>
+
+=cut
+
+__PACKAGE__->has_many(
+  "posts",
+  "ESocial::Schema::Result::Post",
+  { "foreign.author" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user
 
 Type: belongs_to
@@ -250,9 +265,24 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
+=head2 wall_posts
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-15 20:34:17
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RGwa1d5oBCh/lhqzTDriPw
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::WallPost>
+
+=cut
+
+__PACKAGE__->has_many(
+  "wall_posts",
+  "ESocial::Schema::Result::WallPost",
+  { "foreign.wall_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 13:22:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zyXr7jThk/oaQ7CTevJbmg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

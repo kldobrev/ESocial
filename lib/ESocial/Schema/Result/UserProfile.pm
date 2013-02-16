@@ -130,6 +130,21 @@ __PACKAGE__->set_primary_key("user_id");
 
 =head1 RELATIONS
 
+=head2 comments
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::Comment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "comments",
+  "ESocial::Schema::Result::Comment",
+  { "foreign.commenter" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 friend_group_member_friends
 
 Type: has_many
@@ -281,8 +296,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 13:22:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zyXr7jThk/oaQ7CTevJbmg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 17:59:37
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QkPl46llw6TKtgkSLwvU1Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

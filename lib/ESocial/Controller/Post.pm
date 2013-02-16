@@ -94,16 +94,21 @@ sub create_wall_post :Local :Args(1) {
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 }
 
+sub delete_regular_post {
+	my ($c, $post_id) = (shift, shift);
+	my $post = $c->model('ESocial::Post')->find($post_id);
+	$post->delete;
+}
+
 =head2 delete_post
 
 Deletes a post by author and post id
 
 =cut
 
-sub delete_post :Local :Args(2) {
+sub delete_wall_post :Local :Args(2) {
 	my ($self, $c, $post_id, $profile_id) = @_;
-	my $post = $c->model('ESocial::Post')->find($post_id);
-	$post->delete;
+	delete_regular_post($c, $post_id);
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 }
 

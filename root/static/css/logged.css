@@ -136,7 +136,7 @@ h2 {
 }
 
 #post_list {
-	font-size: 15px;
+	font-size: 15.5px;
 	list-style-type: none;
 	padding-left: 0;
 	margin-bottom: 80px;
@@ -145,6 +145,15 @@ h2 {
 #post_list li {
 	border-bottom: 1px solid black;
 }
+
+#comments li {
+	padding: 2px;
+	background-color: #E4FF98;
+	font-size: 13.5px;
+	border-top: 1px solid black;
+	border-bottom: none;
+}
+
 /* -------------------------------Edit profile--------------------------------------- */
 
 #edit_space img {

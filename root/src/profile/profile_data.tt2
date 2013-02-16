@@ -72,11 +72,24 @@
 			[% FOREACH post IN posts.all %]
 				[% IF (post.privacy_lev == 0) || (post.privacy_lev == 1 && is_friend) || (is_own_profile) %]
 				<li>
-					<span class="bold">[% post.post.author.name %]</span>  [% post.post.created %] <br />
+					<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), post.post.author.user.id) %]">[% post.post.author.name %]</a></span>  [% post.post.created %] <br />
 					[% post.post.content %] <br />
-					[% IF c.user.id == post.post.author.id %]
-						<a href="[% c.uri_for(c.controller('Post').action_for('delete_post'), post.post.id, profile.user.id) %]">Delete</a>
+					[% IF is_own_profile || (c.user.id == post.post.author.id)  %]
+						<a href="[% c.uri_for(c.controller('Post').action_for('delete_wall_post'), post.post.id, profile.user.id) %]">Delete</a>
 					[% END %]
+					<form action="[% c.uri_for(c.controller('Comment').action_for('create_wall_comment'), profile.user.id, post.post.id) %]" method="post">
+						<input type="text" name="c_content" />
+						<input class="user_button" type="submit" value="Comment" />
+					</form>
+					<ul id="comments">
+						[% FOREACH comment IN post.post.comments %]
+							<li>
+								<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), comment.commenter.user_id) %]">[% comment.commenter.name %]</a></span> [% comment.created %] <br />
+								[% comment.content %] <br />
+								<a href="[% c.uri_for(c.controller('Comment').action_for('delete_wall_comment'), profile.user.id, comment.id) %]">Delete</a>
+							</li>
+						[% END %]
+					</ul>
 				</li>
 				[% END %]
 			[% END %]

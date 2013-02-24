@@ -83,7 +83,11 @@ Creates a post on friend's wall
 
 sub create_wall_post :Local :Args(1) {
 	my ($self, $c, $profile_id) = @_;
-	my $p_content = $c->request->params->{p_content};
+	my $p_content = $c->request->params->{p_content} or '';
+	if($p_content eq '') {
+		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
+		return;	
+	}
 	my $p_privacy = $c->request->params->{p_privacy} + 0;
 	my $new_post = regular_post($c, $p_content);
 	$c->model('ESocial::WallPost')->create({

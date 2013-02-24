@@ -83,7 +83,11 @@ Creates a comment to a wall post
 
 sub create_wall_comment :Local :Args(2) {
 	my ($self, $c, $profile_id, $post_id) = @_;
-	my $c_content = $c->request->params->{c_content};
+	my $c_content = $c->request->params->{c_content} or '';
+	if($c_content eq '') {
+		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
+		return;	
+	}
 	regular_comment($c, $post_id);
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 }

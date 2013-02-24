@@ -145,17 +145,17 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 data_pages
+=head2 fan_pages
 
 Type: has_many
 
-Related object: L<ESocial::Schema::Result::DataPage>
+Related object: L<ESocial::Schema::Result::FanPage>
 
 =cut
 
 __PACKAGE__->has_many(
-  "data_pages",
-  "ESocial::Schema::Result::DataPage",
+  "fan_pages",
+  "ESocial::Schema::Result::FanPage",
   { "foreign.creator" => "self.user_id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -336,8 +336,8 @@ Composing rels: L</pages_like> -> page
 __PACKAGE__->many_to_many("pages", "pages_like", "page");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 23:15:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:b5p1PkKIy+TTAwjouXlYrw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-24 23:23:41
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lOWtZ2kjM2IsKPgig1/wXg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

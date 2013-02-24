@@ -101,14 +101,18 @@ Send message to friend
 sub send_message :Local  :Args(1) {
 	my ($self, $c, $profile_id) = @_;
 	my $m_title = $c->request->params->{m_title};
-	my $m_content = $c->request->params->{m_content};
+	my $m_content = $c->request->params->{m_content} or '';
+	if($m_content eq '') {
+		$c->response->redirect($c->uri_for($c->controller->action_for('create_message'), $profile_id));
+		return;
+	}
 	$c->model('ESocial::Message')->create({
 		from_id => $c->user->id,
 		to_id => $profile_id,
 		title => $m_title,
 		content => $m_content
 	});
-	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
+	$c->response->redirect($c->uri_for($c->controller->action_for('message_list'), $profile_id));
 }
 
 =head2 view_message

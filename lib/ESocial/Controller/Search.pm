@@ -70,7 +70,13 @@ sub results :Local {
 	my $search_term = $c->request->params->{'search_term'};
 	if(length($search_query) > 0) {
 		my $result_set = [$c->model("ESocial::$search_term")->search(name => { like => "%$search_query%" })->all];
+		my $uri_hash;
+		switch($search_term) {
+			case 'UserProfile' {$uri_hash = {controller => 'Profile', action => 'get_profile'}}
+			case 'FanPage' {$uri_hash = {controller => 'Page', action => 'get_page'}}
+		}
 		$c->stash(result_set => $result_set);
+		$c->stash(uri_hash => $uri_hash);
 	}
 	$c->stash(template => 'search.tt2');
 }

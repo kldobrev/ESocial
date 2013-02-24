@@ -4,6 +4,7 @@
 		<input id="search_bar" type="text" name="search_query" />
 		<select name="search_term">
 			<option value="UserProfile">People</option>
+			<option value="FanPage">Pages</option>
 		</search>
 		<input type="Submit" value="Go" />
 	</form>
@@ -11,7 +12,7 @@
 		<h2>Results</h2>
 		<ul>
 			[% FOREACH elem IN c.stash.result_set -%]
-				<li><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), elem.id) %]"><img/>[% elem.name %]</a></li>
+				<li><a href="[% c.uri_for(c.controller(uri_hash.controller).action_for(uri_hash.action), elem.id) %]"><img/>[% elem.name %]</a></li>
 			[% END %]
 		</ul>
 	</div>

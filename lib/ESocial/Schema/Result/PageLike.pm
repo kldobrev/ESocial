@@ -83,13 +83,13 @@ __PACKAGE__->set_primary_key("profile_id", "page_id");
 
 Type: belongs_to
 
-Related object: L<ESocial::Schema::Result::DataPage>
+Related object: L<ESocial::Schema::Result::FanPage>
 
 =cut
 
 __PACKAGE__->belongs_to(
   "page",
-  "ESocial::Schema::Result::DataPage",
+  "ESocial::Schema::Result::FanPage",
   { id => "page_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
@@ -110,8 +110,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 23:15:58
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6Mn9AXnZ28HzZEHTAfdeiQ
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-24 23:23:41
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:N2+FJ1AZxJJIv1rQLzbeuA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

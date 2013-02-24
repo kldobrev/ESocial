@@ -73,7 +73,7 @@ Retreive a page
 
 sub get_page :Local :Args(1) {
 	my ($self, $c, $page_id) = @_;
-	my $page = $c->model('ESocial::DataPage')->find($page_id);
+	my $page = $c->model('ESocial::FanPage')->find($page_id);
 	$c->stash(page => $page);
 	$c->stash(template => 'pages/page.tt2');
 }
@@ -88,9 +88,9 @@ sub create_page :Local {
 	my ($self, $c) = @_;
 	my $p_name = $c->request->params->{p_name};
 	my $p_about =  $c->request->params->{p_about};
-	my $page = $c->model('ESocial::DataPage')->create({
+	my $page = $c->model('ESocial::FanPage')->create({
 		creator => $c->user->id, 
-		title => $p_name,
+		name => $p_name,
 		about => $p_about
 	});
 	$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page->id));

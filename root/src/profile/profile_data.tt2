@@ -57,7 +57,7 @@
 	<div id="wall">
 		<h2>Wall:</h2>
 		<form action="[% c.uri_for(c.controller('Post').action_for('create_wall_post'), profile.user_id) %]" method="post">
-			<textarea name="p_content" rows="2" cols="68">Write your thoughts</textarea> <br />
+			<textarea name="p_content" placeholder="Write your thoughts" rows="2" cols="68"></textarea> <br />
 			[% IF is_own_profile %]
 				<label for="visibility">Visibility:</label>
 				<select id="visibility" name="p_privacy">
@@ -78,7 +78,7 @@
 						<a href="[% c.uri_for(c.controller('Post').action_for('delete_wall_post'), post.post.id, profile.user.id) %]">Delete</a>
 					[% END %]
 					<form action="[% c.uri_for(c.controller('Comment').action_for('create_wall_comment'), profile.user.id, post.post.id) %]" method="post">
-						<input type="text" name="c_content" />
+						<input type="text" name="c_content" placeholder="Write a comment" />
 						<input class="user_button" type="submit" value="Comment" />
 					</form>
 					<ul id="comments">

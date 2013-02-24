@@ -2,8 +2,16 @@
 	<a href="[% c.uri_for(c.controller.action_for('message_list')) %]">Back to messages</a>
 	<p><span class="bold">From:</span> [% message.from.name %] <br />
 	<span class="bold">Received on:</span> [% message.created %] <br />
-	<span class="bold">About:</span> [% message.title %]<br /> <br />
+	<span class="bold">Content:</span> [% message.title %]<br /> <br />
 	[% message.content %]
 	</p>
-	<a class="user_button" href="[% c.uri_for(c.controller.action_for('delete_message'), message.id) %]">Delete Message</a>
+	<a class="user_button" href="[% c.uri_for(c.controller('Messages').action_for('delete_message'), message.id) %]">Delete Message</a>
+	<h3>Repply:</h3>
+	<form action="[% c.uri_for(c.controller.action_for('send_message'), message.from.user_id) %]" method="post">
+		<label for="r_title">Title</label> <br />
+		<input id="r_title" type="text" name="r_title" value="[% 'Re: ' _ message.title %]" /> <br />
+		<label for="r_content">Content:</label> <br />
+		<textarea name="m_content" id="r_content" rows="4" cols="48"></textarea> <br />
+		<input class="user_button" type="Submit" value="Repply" />
+	</form>
 </div>

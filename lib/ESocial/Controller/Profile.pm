@@ -119,6 +119,7 @@ sub get_profile :Path('id') :Args(1) {
 	my $friends = $c->model('ESocial::FriendPair')->search({user_id => $user_profile->id, status => 1})->slice(0..4);
 	my $posts = $c->model('ESocial::WallPost')->search({wall_id => $id}, {order_by => {-desc => 'post_id'}});
 	my $is_friend = $friends->search(friend_id => $c->user->id)->single or 0;
+	my $pages = $c->model('ESocial::PageLike')->search(profile_id => $user_profile->id);
 
 	$c->stash(but_vals => $but_vals);
 	$c->stash(gender => $gender);
@@ -128,6 +129,7 @@ sub get_profile :Path('id') :Args(1) {
 	$c->stash(friends => $friends);
 	$c->stash(posts => $posts);
 	$c->stash(is_friend => $is_friend);
+	$c->stash(pages => $pages);
 	$c->stash(template => 'profile/profile_data.tt2');
 }
 

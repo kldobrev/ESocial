@@ -107,6 +107,21 @@ __PACKAGE__->belongs_to(
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
+=head2 page_posts
+
+Type: has_many
+
+Related object: L<ESocial::Schema::Result::PagePost>
+
+=cut
+
+__PACKAGE__->has_many(
+  "page_posts",
+  "ESocial::Schema::Result::PagePost",
+  { "foreign.page_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 pages_like
 
 Type: has_many
@@ -133,8 +148,8 @@ Composing rels: L</pages_like> -> profile
 __PACKAGE__->many_to_many("profiles", "pages_like", "profile");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-24 23:23:41
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6PsK4EFjhVqrjMvCSJs4vg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-28 22:51:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FsRlUp6uhKZSqN7Vl67aXg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

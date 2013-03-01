@@ -83,8 +83,8 @@ Creates a comment to a wall post
 
 sub create_wall_comment :Local :Args(2) {
 	my ($self, $c, $profile_id, $post_id) = @_;
-	my $c_content = $c->request->params->{c_content} or '';
-	if($c_content eq '') {
+	my $c_content = $c->request->params->{c_content};
+	if(!$c_content) {
 		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 		return;	
 	}
@@ -92,6 +92,22 @@ sub create_wall_comment :Local :Args(2) {
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 }
 
+=head2 craete_page_comment
+
+Creates a comment to a wall post
+
+=cut
+
+sub create_page_comment :Local :Args(2) {
+	my ($self, $c, $page_id, $post_id) = @_;
+	my $c_content = $c->request->params->{c_content};
+	if(!$c_content) {
+		$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page_id));
+		return;	
+	}
+	regular_comment($c, $post_id);
+	$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page_id));
+}
 sub delete_comment {
 	my ($c, $comment_id) = (shift, shift);
 	my $comment = $c->model('ESocial::Comment')->find($comment_id);
@@ -108,6 +124,18 @@ sub delete_wall_comment :Local :Args(2) {
 	my ($self, $c, $profile_id, $comment_id) = @_;
 	delete_comment($c, $comment_id);
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
+}
+
+=head2 delete_page_comment
+
+Deletes comment from page post
+
+=cut
+
+sub delete_page_comment :Local :Args(2) {
+	my ($self, $c, $page_id, $comment_id) = @_;
+	delete_comment($c, $comment_id);
+	$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page_id));
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -106,9 +106,6 @@ body {
 	width: 200px;
 }
 
-#basic_data div {
-}
-
 #basic_data a {
 	margin-left: 4px;
 }
@@ -123,9 +120,21 @@ body {
 	border-radius: 6px;	
 }
 
+#pages_list {
+	padding: 0;
+	width: 360px;
+	list-style-type: none;
+}
+
+#pages_list li {
+	display: inline;
+}
+
 h2 {
 	clear: both;
 }
+
+/* -------------------------------Posts and comments--------------------------------------- */
 
 #other {
 	width: 490px;
@@ -142,12 +151,17 @@ h2 {
 	margin-bottom: 80px;
 }
 
-#post_list li {
+.single_post {
 	padding: 3px;
 	border-bottom: 1px solid black;
 }
 
-#comments li {
+.comments {
+	padding-left: 24px;
+	list-style-type: none;
+}
+
+.comments li {
 	padding: 2px;
 	background-color: #E4FF98;
 	font-size: 13.5px;
@@ -221,4 +235,13 @@ h2 {
 .unread a {
 	background-color: yellow;
 	color: green;
+}
+
+/* -------------------------------Page--------------------------------------- */
+#page_basic {
+	float: left;
+}
+
+#page_other {
+	float: right;
 }

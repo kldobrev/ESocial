@@ -29,7 +29,14 @@
 <h2>About:</h2>
 <p id="about">[% c.stash.profile.about %]</p>
 <h2>Interests</h2>
-<h3>Pages</h3>
+<h3>Pages ([% pages.count %])</h3>
+<ul id="pages_list">
+	[% FOR page IN pages.all %]
+		<li>
+			<a href="[% c.uri_for(c.controller('Page').action_for('get_page'), page.page_id) %]">[% page.page.name %]</a> 
+		</li>
+	[% END %]
+</ul>
 <h3>Groups</h3>
 </div>
 <div id="other">
@@ -71,7 +78,7 @@
 		<ul id="post_list">
 			[% FOREACH post IN posts.all %]
 				[% IF (post.privacy_lev == 0) || (post.privacy_lev == 1 && is_friend) || (is_own_profile) %]
-				<li>
+				<li class="single_post">
 					<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), post.post.author.user.id) %]">[% post.post.author.name %]</a></span> [% post.post.content %] <br />
 					[% post.post.created %] <br />
 					[% IF is_own_profile || (c.user.id == post.post.author.id)  %]
@@ -81,7 +88,7 @@
 						<input type="text" name="c_content" placeholder="Write a comment" />
 						<input class="user_button" type="submit" value="Comment" />
 					</form>
-					<ul id="comments">
+					<ul class="comments">
 						[% FOREACH comment IN post.post.comments %]
 							<li>
 								<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), comment.commenter.user_id) %]">[% comment.commenter.name %]</a></span> [% comment.created %] <br />

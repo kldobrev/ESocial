@@ -11,7 +11,7 @@
 		<label for="log_pass">Password:</label> <br/>
 		<input id="log_pass" type="password" name="log_pass" /> <br/>
 		<input type="submit" value="Log in">
-	</form>
+	</form>	
 </div>
 <div id="register_form">
 	<h1>Register</h1>

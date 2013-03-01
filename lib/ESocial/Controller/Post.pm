@@ -83,8 +83,8 @@ Creates a post on friend's wall
 
 sub create_wall_post :Local :Args(1) {
 	my ($self, $c, $profile_id) = @_;
-	my $p_content = $c->request->params->{p_content} or '';
-	if($p_content eq '') {
+	my $p_content = $c->request->params->{p_content};
+	if(!$p_content) {
 		$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 		return;	
 	}
@@ -98,15 +98,36 @@ sub create_wall_post :Local :Args(1) {
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
 }
 
+=head2 create_page_post
+
+Creates a post on friend's wall
+
+=cut
+
+sub create_page_post :Local :Args(1) {
+	my ($self, $c, $page_id) = @_;
+	my $p_content = $c->request->params->{p_content};
+	if(!$p_content) {
+		$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page_id));
+		return;	
+	}
+	my $new_post = regular_post($c, $p_content);
+	$c->model('ESocial::PagePost')->create({
+		post_id => $new_post->id,
+		page_id => $page_id,
+	});
+	$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page_id));
+}
+
 sub delete_regular_post {
 	my ($c, $post_id) = (shift, shift);
 	my $post = $c->model('ESocial::Post')->find($post_id);
 	$post->delete;
 }
 
-=head2 delete_post
+=head2 delete_wall_post
 
-Deletes a post by author and post id
+Deletes a post on user's wall
 
 =cut
 
@@ -114,6 +135,18 @@ sub delete_wall_post :Local :Args(2) {
 	my ($self, $c, $post_id, $profile_id) = @_;
 	delete_regular_post($c, $post_id);
 	$c->response->redirect($c->uri_for($c->controller('Profile')->action_for('get_profile'), $profile_id));
+}
+
+=head2 delete_page_post
+
+Deletes a post on a page
+
+=cut
+
+sub delete_page_post :Local :Args(2) {
+	my ($self, $c, $post_id, $page_id) = @_;
+	delete_regular_post($c, $post_id);
+	$c->response->redirect($c->uri_for($c->controller('Page')->action_for('get_page'), $page_id));
 }
 
 __PACKAGE__->meta->make_immutable;

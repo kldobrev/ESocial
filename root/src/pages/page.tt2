@@ -1,2 +1,51 @@
-<h1>[% page.title %]</h1>
-<p>[% page.about %]</p>
+<div id=page_basic>
+[% IF is_creator %]
+	<a class="user_button" href="[% c.uri_for(c.controller.action_for('edit_page'), page.id) %]">Edit page</a>
+[% END %]
+	<h1>[% page.name %]</h1>
+	<p>[% page.about %]</p>
+	[% IF is_fan %]
+		<a class="user_button" href="[% c.uri_for(c.controller.action_for('unlike_page'), page.id) %]">Unlike</a>
+	[% ELSE %]
+		<a class="user_button" href="[% c.uri_for(c.controller.action_for('like_page'), page.id) %]">Like</a>
+	[% END %]
+<h2>Fans ([% fans_num %])</h2>
+[% IF fans_num %]
+	<a href="[% c.uri_for(c.controller.action_for('get_fan_list'), page.id) %]">See all fans</a>
+[% END %]
+</div>
+<div id="page_other">
+	<div id="wall">
+		<h2>Wall:</h2>
+		<form action="[% c.uri_for(c.controller('Post').action_for('create_page_post'), page.id) %]" method="post">
+			<textarea name="p_content" placeholder="Write your thoughts" rows="2" cols="68"></textarea> <br />
+			<input class="user_button" type="submit" value="Post it" />
+		</form>
+		<ul id="post_list">
+			[% FOREACH post IN posts.all %]
+				<li class="single_post">
+					<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), post.post.author.user.id) %]">[% post.post.author.name %]</a></span> [% post.post.content %] <br />
+					[% post.post.created %] <br />
+					[% IF (c.user.id == post.post.author.id)  %]
+						<a href="[% c.uri_for(c.controller('Post').action_for('delete_page_post'), post.post.id, page.id) %]">Delete</a>
+					[% END %]
+					<form action="[% c.uri_for(c.controller('Comment').action_for('create_page_comment'), page.id, post.post.id) %]" method="post">
+						<input type="text" name="c_content" placeholder="Write a comment" />
+						<input class="user_button" type="submit" value="Comment" />
+					</form>
+					<ul class="comments">
+						[% FOREACH comment IN post.post.comments %]
+							<li>
+								<span class="bold"><a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), comment.commenter.user_id) %]">[% comment.commenter.name %]</a></span> [% comment.created %] <br />
+								[% comment.content %] <br />
+								[% IF comment.commenter.user.id == c.user.id %]
+									<a href="[% c.uri_for(c.controller('Comment').action_for('delete_page_comment'), page.id, comment.id) %]">Delete</a>
+								[% END %]
+							</li>
+						[% END %]
+					</ul>
+				</li>
+			[% END %]
+		</ul>
+	</div>
+</div>

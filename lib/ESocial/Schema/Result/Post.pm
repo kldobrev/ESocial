@@ -128,6 +128,21 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+=head2 page_post
+
+Type: might_have
+
+Related object: L<ESocial::Schema::Result::PagePost>
+
+=cut
+
+__PACKAGE__->might_have(
+  "page_post",
+  "ESocial::Schema::Result::PagePost",
+  { "foreign.post_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 wall_post
 
 Type: might_have
@@ -144,8 +159,8 @@ __PACKAGE__->might_have(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-16 17:59:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GMi2S/XtTBa8Tdnmt/g7yw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2013-02-28 22:51:33
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ar3Df+C0N7goyAJ9Dd5yZA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

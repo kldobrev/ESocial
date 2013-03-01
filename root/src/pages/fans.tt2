@@ -1,0 +1,9 @@
+<a href="[% c.uri_for(c.controller.action_for('get_page'), page_id) %]">Back to page</a>
+<h2>Fans</h2>
+<ul>
+	[% FOR fan IN fans.all %]
+		<li>
+			<a href="[% c.uri_for(c.controller('Profile').action_for('get_profile'), fan.profile_id) %]">[% fan.profile.name _ ', ' _ fan.profile.location %]</a>
+		</li>
+	[% END %]
+</ul>
